@@ -4,10 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.finalproject_lottosimulator.databinding.ActivityMainBinding;
 
@@ -38,12 +40,28 @@ public class MainActivity extends BaseActivity {
 
     List<TextView> myNumTxts = new ArrayList<>();
 
+    Handler mHandler = new Handler();
+    Runnable buyLottoRunnable = new Runnable() {
+        @Override
+        public void run() {
+            if(useMoney <10000000){
+                makeLottoWinNumbers();
+                checkWinRank();
+            }
+            else{
+                Toast.makeText(mContext, "로또 구매를 종료합니다.", Toast.LENGTH_SHORT).show();
+            }
+            mHandler.post(buyLottoRunnable);
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this,R.layout.activity_main);
         setupEvents();
         setValues();
+
     }
 
     @Override
@@ -52,13 +70,7 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
 
-                while(true){
-                    makeLottoWinNumbers();
-                    checkWinRank();
-                    if(useMoney > 10000000){
-                        break;
-                    }
-                }
+                mHandler.post(buyLottoRunnable);
 
             }
         });
