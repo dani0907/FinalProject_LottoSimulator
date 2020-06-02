@@ -6,16 +6,21 @@ import androidx.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.example.finalproject_lottosimulator.databinding.ActivityMainBinding;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class MainActivity extends BaseActivity {
     ActivityMainBinding binding;
 
     int[] winLottoNumArr = new int[6]; //배열의 3번칸에 적힌 값? 0
     int bonusNum = 0;
+
+    List<TextView> winNumTxts = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +44,12 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void setValues() {
-
+        winNumTxts.add(binding.winNumTxt01);
+        winNumTxts.add(binding.winNumTxt02);
+        winNumTxts.add(binding.winNumTxt03);
+        winNumTxts.add(binding.winNumTxt04);
+        winNumTxts.add(binding.winNumTxt05);
+        winNumTxts.add(binding.winNumTxt06);
     }
 
     void makeLottoWinNumbers(){
@@ -67,8 +77,11 @@ public class MainActivity extends BaseActivity {
             }
         }
         Arrays.sort(winLottoNumArr);
-        for(int winNum : winLottoNumArr){
-            Log.d("당첨번호",winNum+"");
+        for(int i=0; i<winNumTxts.size(); i++){
+            int winNum = winLottoNumArr[i];
+
+            winNumTxts.get(i).setText(winNum+"");
+
         }
     }
 }
