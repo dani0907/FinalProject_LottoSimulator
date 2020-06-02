@@ -59,7 +59,7 @@ public class MainActivity extends BaseActivity {
 
         useMoney += 1000;
 
-        binding.useMoneyTxt.setText(String.format("%,d원"));
+        binding.useMoneyTxt.setText(String.format("%,d원",useMoney));
 
     }
 
